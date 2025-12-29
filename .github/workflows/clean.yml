@@ -1,0 +1,25 @@
+name: Clean URLs
+
+on:
+  push:
+    paths:
+      - "raw/urls.txt"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: node scripts/clean.js
+
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/achievements.json
+          git commit -m "auto: clean achievements" || echo "No changes"
+          git push
