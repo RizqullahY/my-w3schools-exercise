@@ -1,8 +1,14 @@
 [
   {
-    "title": "I completed the PYTHON Syntax Exercise from W3Schools 💪",
-    "url": null,
+    "title": "I completed the PYTHON Multiple Variable Values Exercise from W3Schools 💪",
+    "url": "https://www.w3schools.com/python/exercises/variables_multiple.htm",
     "source": "W3Schools",
-    "shared_from": "X"
+    "shared_from": "www.linkedin.com"
+  },
+  {
+    "title": "I have completed the PYTHON Syntax Exercise from W3Schools.com",
+    "url": "https://www.w3schools.com/python/exercises/syntax.htm",
+    "source": "W3Schools",
+    "shared_from": "www.facebook.com"
   }
 ]
