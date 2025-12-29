@@ -1,9 +1,13 @@
 name: Clean URLs
 
+permissions:
+  contents: write   # 👈 INI KUNCI UTAMA
+
 on:
   push:
     paths:
       - "raw/urls.txt"
+  workflow_dispatch:
 
 jobs:
   build:
