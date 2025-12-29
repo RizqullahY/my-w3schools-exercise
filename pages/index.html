@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>W3</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Tailwind CDN (no build) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* scroll smooth + nice font */
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+
+<body class="bg-slate-100 text-slate-800">
+
+  <!-- HEADER -->
+  <header class="bg-white shadow-sm sticky top-0 z-10">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-xl font-bold">🏆 My W3 Learning </h1>
+      <span class="text-sm text-slate-500">Auto-generated from raw URLs</span>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="max-w-6xl mx-auto px-6 py-10">
+
+    <!-- INFO -->
+    <div class="mb-8">
+      <p class="text-slate-600">
+        This page is generated automatically from shared achievement URLs.
+        Data is cleaned using GitHub Actions.
+      </p>
+    </div>
+
+    <!-- LOADING -->
+    <div id="loading" class="text-center text-slate-500">
+      Loading achievements...
+    </div>
+
+    <!-- LIST -->
+    <div
+      id="list"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 hidden"
+    ></div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="mt-16 py-6 text-center text-sm text-slate-500">
+    Built with ❤️ using GitHub Pages
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    fetch("../data/achievements.json")
+      .then(res => res.json())
+      .then(data => {
+        const list = document.getElementById("list");
+        const loading = document.getElementById("loading");
+
+        if (!data.length) {
+          loading.innerText = "No achievements yet.";
+          return;
+        }
+
+        list.innerHTML = data.map(item => `
+          <div class="bg-white rounded-xl shadow hover:shadow-lg transition p-5 flex flex-col">
+            <div class="flex-1">
+              <h2 class="font-semibold text-lg mb-2">
+                ${item.title || "Untitled Achievement"}
+              </h2>
+
+              <p class="text-sm text-slate-500 mb-4">
+                Source: ${item.source || "Unknown"}
+              </p>
+            </div>
+
+            <div class="flex justify-between items-center text-sm">
+              <a
+                href="${item.url}"
+                target="_blank"
+                class="text-blue-600 hover:underline"
+              >
+                View
+              </a>
+
+              ${item.shared_from === "X" && item.share?.x ? `
+                <a
+                  href="${item.share.x}"
+                  target="_blank"
+                  class="text-slate-500 hover:text-black"
+                >
+                  Share
+                </a>
+              ` : ""}
+            </div>
+          </div>
+        `).join("");
+
+        loading.classList.add("hidden");
+        list.classList.remove("hidden");
+      })
+      .catch(err => {
+        document.getElementById("loading").innerText =
+          "Failed to load data.";
+        console.error(err);
+      });
+  </script>
+
+</body>
+</html>
