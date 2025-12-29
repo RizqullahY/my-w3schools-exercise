@@ -1,36 +1,25 @@
 const feed = document.getElementById("feed");
 const loading = document.getElementById("loading");
-const toggle = document.getElementById("themeToggle");
 const root = document.documentElement;
 
 /* =========================
-   THEME HANDLER
+   RANDOM IMAGE
 ========================= */
-function setTheme(theme) {
-  if (theme === "dark") {
-    root.classList.add("dark");
-    toggle.textContent = "☀️";
-  } else {
-    root.classList.remove("dark");
-    toggle.textContent = "🌙";
-  }
-  localStorage.setItem("theme", theme);
+const IMAGE_COUNT = 55;
+
+function randomImage() {
+  const index = Math.floor(Math.random() * IMAGE_COUNT) + 1;
+  return `images/${index}.png`;
 }
 
-// init theme
-setTheme(localStorage.getItem("theme") || "light");
-
-toggle.addEventListener("click", () => {
-  const next = root.classList.contains("dark") ? "light" : "dark";
-  setTheme(next);
-});
-
 /* =========================
-   FETCH DATA
+   FETCH DATA (ASYNC)
 ========================= */
-fetch("../data/achievements.json")
-  .then(res => res.json())
-  .then(data => {
+async function loadFeed() {
+  try {
+    const res = await fetch("../data/achievements.json");
+    const data = await res.json();
+
     if (!data.length) {
       loading.textContent = "No achievements yet.";
       return;
@@ -38,31 +27,34 @@ fetch("../data/achievements.json")
 
     feed.innerHTML = data.map(item => `
       <div class="post">
-        <div class="text-sm text-gray-500 mb-1">
-          ${item.source || "W3Schools"}
-        </div>
+        <img src="${randomImage()}" class="post-avatar" alt="icon">
 
-        <h2 class="font-medium text-base mb-2">
-          ${item.title || "Untitled Achievement"}
-        </h2>
+        <div class="post-content">
+          <div class="post-source">
+            ${item.source || "W3Schools"}
+          </div>
 
-        <div class="flex justify-between text-sm">
-          <a href="${item.url}" target="_blank">
-            View exercise
-          </a>
+          <h2 class="post-title">
+            ${item.title || "Untitled Achievement"}
+          </h2>
 
-          ${item.share?.x ? `
-            <a href="${item.share.x}" target="_blank" class="text-gray-400">
-              Share
-            </a>
-          ` : ""}
+          <div class="post-actions">
+            <a href="${item.url}" target="_blank">View exercise</a>
+
+            ${item.share?.x ? `
+              <a href="${item.share.x}" target="_blank">Share</a>
+            ` : ""}
+          </div>
         </div>
       </div>
     `).join("");
 
     loading.classList.add("hidden");
     feed.classList.remove("hidden");
-  })
-  .catch(() => {
+
+  } catch (err) {
     loading.textContent = "Failed to load data.";
-  });
+  }
+}
+
+loadFeed();

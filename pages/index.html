@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
-  <title>My W3 Learning</title>
+  <title>MY W3SCHOOL LEARNING</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <link rel="icon" type="image/png" href="images/icon.png">
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
 
@@ -12,28 +12,29 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
-<body class="bg-gray-100 text-gray-900 transition-colors">
+<body class="bg-white text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100 transition-colors">
 
   <!-- HEADER -->
-  <header class="sticky top-0 z-10 bg-white dark:bg-black border-b border-gray-200 dark:border-gray-800">
-    <div class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center">
-      <h1 class="font-bold text-lg">My W3 Learning</h1>
-
-      <!-- TOGGLE -->
-      <button id="themeToggle" class="text-sm text-gray-500 hover:text-black dark:hover:text-white">
-        🌙
-      </button>
+  <header class="sticky top-0 z-20 bg-white dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-700">
+    <div class="max-w-xl mx-auto px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- Avatar atas -->
+        <img src="images/avatar.png" class="w-8 h-8 rounded-full" alt="avatar">
+        <h1 class="font-semibold text-base tracking-tight">
+          <i>MY W3SCHOOL LEARNING</i> 
+        </h1>
+      </div>
     </div>
   </header>
 
-  <!-- MAIN -->
-  <main class="max-w-3xl mx-auto px-4 py-6">
+  <!-- FEED -->
+  <main class="max-w-xl mx-auto px-4 py-4">
 
-    <div id="loading" class="text-center text-gray-500">
-      Loading achievements...
+    <div id="loading" class="text-center text-sm text-neutral-500 py-8">
+      Loading…
     </div>
 
-    <div id="feed" class="space-y-4 hidden"></div>
+    <div id="feed" class="divide-y divide-neutral-200 dark:divide-neutral-700 hidden"></div>
 
   </main>
 
